@@ -15,7 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Horus Firmware.  If not, see <http://www.gnu.org/licenses/>.
 
-#  This file is based on work from Grbl v0.9, distributed under the 
+#  This file is based on work from Grbl v0.9, distributed under the
 #  terms of the GPLv3. See COPYING for more details.
 #    Copyright (c) 2009-2011 Simen Svale Skogsrud
 #    Copyright (c) 2011-2014 Sungeun K. Jeon
@@ -31,7 +31,7 @@
 #                is connected.
 # FUSES ........ Parameters for avrdude to flash the fuses appropriately.
 
-DEVICE     ?= atmega328p
+DEVICE     ?= atmega2560
 CLOCK      = 16000000
 PROGRAMMER ?= -c avrisp2 -P usb
 OBJECTS    = main.o motion_control.o gcode.o serial.o laser_control.o ldr.o \

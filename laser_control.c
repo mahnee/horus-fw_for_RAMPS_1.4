@@ -35,8 +35,19 @@ volatile uint8_t laser_timer[4];
 void laser_init()
 {
   // Initialize lasers
-  LASER_DDR |= LASER_MASK;
-  LASER_PORT &= ~LASER_MASK;
+  #ifdef CPU_MAP_ATMEGA2560_RAMPS14_HORUS
+    LASER1_DDR |= LASER1_MASK;
+    LASER2_DDR |= LASER2_MASK;
+    LASER3_DDR |= LASER3_MASK;
+    LASER4_DDR |= LASER4_MASK;
+    LASER1_PORT &= ~LASER1_MASK;
+    LASER2_PORT &= ~LASER2_MASK;
+    LASER3_PORT &= ~LASER3_MASK;
+    LASER4_PORT &= ~LASER4_MASK;
+  #else
+    LASER_DDR |= LASER_MASK;
+    LASER_PORT &= ~LASER_MASK;
+  #endif
 
   // Initialize timer2
   cli();                              // disable interrupts
@@ -50,12 +61,30 @@ void laser_init()
 
 void laser_on(uint8_t laser_bit)
 {
-  LASER_PORT |= laser_bit;
+  #ifdef CPU_MAP_ATMEGA2560_RAMPS14_HORUS
+    switch(laser_bit) {
+      case 1: LASER1_PORT |= LASER1_MASK;
+      case 2: LASER2_PORT |= LASER2_MASK;
+      case 3: LASER3_PORT |= LASER3_MASK;
+      case 4: LASER4_PORT |= LASER4_MASK;
+    }
+  #else
+    LASER_PORT |= laser_bit;
+  #endif
 }
 
 void laser_off(uint8_t laser_bit)
 {
-  LASER_PORT &= ~laser_bit;
+  #ifdef CPU_MAP_ATMEGA2560_RAMPS14_HORUS
+    switch(laser_bit) {
+      case 1: LASER1_PORT &= ~LASER1_MASK;
+      case 2: LASER2_PORT &= ~LASER2_MASK;
+      case 3: LASER3_PORT &= ~LASER3_MASK;
+      case 4: LASER4_PORT &= ~LASER4_MASK;
+    }
+  #else
+    LASER_PORT &= ~laser_bit;
+  #endif
 }
 
 void laser_set(uint8_t id, uint8_t value)
@@ -63,12 +92,19 @@ void laser_set(uint8_t id, uint8_t value)
   uint8_t bit = 0;
 
   switch (id) {
-    case 0: bit = (1<<LASER1_BIT); break;
-    case 1: bit = (1<<LASER2_BIT); break;
-    case 2: bit = (1<<LASER3_BIT); break;
-    case 3: bit = (1<<LASER4_BIT); break;
+    #ifdef CPU_MAP_ATMEGA2560_RAMPS14_HORUS
+      case 0: bit = 1; break;
+      case 1: bit = 2; break;
+      case 2: bit = 3; break;
+      case 3: bit = 4; break;
+    #else
+      case 0: bit = (1<<LASER1_BIT); break;
+      case 1: bit = (1<<LASER2_BIT); break;
+      case 2: bit = (1<<LASER3_BIT); break;
+      case 3: bit = (1<<LASER4_BIT); break;
+    #endif
   }
-  
+
   if (bit > 0) {
     if (value == LASER_ENABLE) {
       laser_on(bit);
