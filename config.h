@@ -46,6 +46,24 @@
 //#define CPU_MAP_ATMEGA328P_HORUS // Arduino Uno CPU for Horus Project
 #define CPU_MAP_ATMEGA2560_RAMPS14_HORUS // Arduino MEGA 2560 CPU and RAMPS 1.4 for Horus Project
 
+// For Arduino MEGA 2560 with RAMPS 1.4
+// Choose only one setting
+//#define USE_X_MOTOR_FOR_TABLE
+//#define USE_Y_MOTOR_FOR_TABLE
+//#define USE_Z_MOTOR_FOR_TABLE
+#define USE_E0_MOTOR_FOR_TABLE
+//#define USE_E1_MOTOR_FOR_TABLE
+
+// Choose only one setting
+//#define USE_SERVO_FOR_LASER
+#define USE_BEDHEATER_FOR_LASER
+
+
+
+
+
+
+
 // Define runtime command special characters. These characters are 'picked-off' directly from the
 // serial read data stream and are not passed to the grbl line execution parser. Select characters
 // that do not and must not exist in the streamed g-code program. ASCII control characters may be

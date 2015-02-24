@@ -313,54 +313,133 @@
   //#define LINE_BUFFER_SIZE	100
 
   // Define laser pulse output pins. NOTE: All laser pins must be on the same port.
-  #define LASER1_DDR       DDRB
-  #define LASER2_DDR       DDRH
-  #define LASER3_DDR       DDRE
-  #define LASER4_DDR       DDRG
-  #define LASER1_PORT      PORTB
-  #define LASER2_PORT      PORTH
-  #define LASER3_PORT      PORTE
-  #define LASER4_PORT      PORTG
-  #define LASER1_BIT      5   // MEGA2560 Digital Pin 11(RAMPS SERVO1)
-  #define LASER2_BIT      3   // MEGA2560 Digital Pin 6 (RAMPS SERVO2)
-  #define LASER3_BIT      3   // MEGA2560 Digital Pin 5 (RAMPS SERVO3)
-  #define LASER4_BIT      5   // MEGA2560 Digital Pin 4 (RAMPS SERVO4)
-  #define LASER1_MASK      (1<<LASER1_BIT) // All step bits
-  #define LASER2_MASK      (1<<LASER1_BIT) // All step bits
-  #define LASER3_MASK      (1<<LASER1_BIT) // All step bits
-  #define LASER4_MASK      (1<<LASER1_BIT) // All step bits
+  #ifdef USE_SERVO_FOR_LASER
+    #define LASER1_DDR       DDRB
+    #define LASER2_DDR       DDRH
+    #define LASER3_DDR       DDRE
+    #define LASER4_DDR       DDRG
+    #define LASER1_PORT      PORTB
+    #define LASER2_PORT      PORTH
+    #define LASER3_PORT      PORTE
+    #define LASER4_PORT      PORTG
+    #define LASER1_BIT      5   // MEGA2560 Digital Pin 11(RAMPS SERVO1)
+    #define LASER2_BIT      3   // MEGA2560 Digital Pin 6 (RAMPS SERVO2)
+    #define LASER3_BIT      3   // MEGA2560 Digital Pin 5 (RAMPS SERVO3)
+    #define LASER4_BIT      5   // MEGA2560 Digital Pin 4 (RAMPS SERVO4)
+    #define LASER1_MASK      (1<<LASER1_BIT) // All step bits
+    #define LASER2_MASK      (1<<LASER1_BIT) // All step bits
+    #define LASER3_MASK      (1<<LASER1_BIT) // All step bits
+    #define LASER4_MASK      (1<<LASER1_BIT) // All step bits
+  #endif
+  #ifdef USE_BEDHEATER_FOR_LASER
+    #define LASER1_DDR       DDRH
+    #define LASER2_DDR       DDRH
+    #define LASER3_DDR       DDRH
+    #define LASER4_DDR       DDRH
+    #define LASER1_PORT      PORTH
+    #define LASER2_PORT      PORTH
+    #define LASER3_PORT      PORTH
+    #define LASER4_PORT      PORTH
+    #define LASER1_BIT      5   // MEGA2560 Digital Pin 8 (RAMPS BED HEATER)
+    #define LASER2_BIT      5   // MEGA2560 Digital Pin 8 (RAMPS BED HEATER)
+    #define LASER3_BIT      5   // MEGA2560 Digital Pin 8 (RAMPS BED HEATER)
+    #define LASER4_BIT      5   // MEGA2560 Digital Pin 8 (RAMPS BED HEATER)
+    #define LASER1_MASK      (1<<LASER1_BIT) // All step bits
+    #define LASER2_MASK      (1<<LASER1_BIT) // All step bits
+    #define LASER3_MASK      (1<<LASER1_BIT) // All step bits
+    #define LASER4_MASK      (1<<LASER1_BIT) // All step bits
+  #endif
 
 // Define step pulse output pins. NOTE: All step bit pins must be on the same port.
-//  #define STEP_DDR      DDRF
-//  #define STEP_PORT     PORTF
-  #define STEP_DDR      DDRL
-  #define STEP_PORT     PORTL
-//  #define STEP_PIN      PINA
-//  #define X_STEP_BIT        0 // MEGA2560 Analog Pin 0(RAPMS 1.4 X-STEP)
-  #define X_STEP_BIT        3 // MEGA2560 Digital Pin 46(RAPMS 1.4 Z-STEP)
+  #ifdef USE_X_MOTOR_FOR_TABLE
+    #define STEP_DDR      DDRF
+    #define STEP_PORT     PORTF
+    #define X_STEP_BIT        0 // MEGA2560 Analog Pin 0(RAPMS 1.4 X-STEP)
+  #endif
+  #ifdef USE_Y_MOTOR_FOR_TABLE
+    #define STEP_DDR      DDRF
+    #define STEP_PORT     PORTF
+    #define X_STEP_BIT        6 // MEGA2560 Analog Pin 6(RAPMS 1.4 Y-STEP)
+  #endif
+  //  #define STEP_PIN      PINA
+  #ifdef USE_Z_MOTOR_FOR_TABLE
+    #define STEP_DDR      DDRL
+    #define STEP_PORT     PORTL
+    #define X_STEP_BIT        3 // MEGA2560 Digital Pin 46(RAPMS 1.4 Z-STEP)
+  #endif
+  #ifdef USE_E0_MOTOR_FOR_TABLE
+    #define STEP_DDR      DDRA
+    #define STEP_PORT     PORTA
+    #define X_STEP_BIT        4 // MEGA2560 Digital Pin 46(RAPMS 1.4 E0-STEP)
+  #endif
+  #ifdef USE_E1_MOTOR_FOR_TABLE
+    #define STEP_DDR      DDRC
+    #define STEP_PORT     PORTC
+    #define X_STEP_BIT        1 // MEGA2560 Digital Pin 36(RAPMS 1.4 E1-STEP)
+  #endif
 //  #define Y_STEP_BIT        3 // MEGA2560 Digital Pin 25
 //  #define Z_STEP_BIT        4 // MEGA2560 Digital Pin 26
   #define STEP_MASK (1<<X_STEP_BIT)
 
   // Define step direction output pins. NOTE: All direction pins must be on the same port.
-//  #define DIRECTION_DDR      DDRF
-//  #define DIRECTION_PORT     PORTF
-  #define DIRECTION_DDR      DDRL
-  #define DIRECTION_PORT     PORTL
-//  #define DIRECTION_PIN      PINA
-//  #define X_DIRECTION_BIT   1 // MEGA2560 Analog Pin 1(RAMPS 1.4 X-DIR)
-  #define X_DIRECTION_BIT   1 // MEGA2560 Digital Pin 48(RAMPS 1.4 Z-DIR)
+  #ifdef USE_X_MOTOR_FOR_TABLE
+    #define DIRECTION_DDR      DDRF
+    #define DIRECTION_PORT     PORTF
+    #define X_DIRECTION_BIT   1 // MEGA2560 Analog Pin 1(RAMPS 1.4 X-DIR)
+  #endif
+  #ifdef USE_Y_MOTOR_FOR_TABLE
+    #define DIRECTION_DDR      DDRF
+    #define DIRECTION_PORT     PORTF
+    #define X_DIRECTION_BIT   7 // MEGA2560 Analog Pin 7(RAMPS 1.4 Y-DIR)
+  #endif
+//    #define DIRECTION_PIN      PINA
+
+  #ifdef USE_Z_MOTOR_FOR_TABLE
+    #define DIRECTION_DDR      DDRL
+    #define DIRECTION_PORT     PORTL
+    #define X_DIRECTION_BIT   1 // MEGA2560 Digital Pin 48(RAMPS 1.4 Z-DIR)
+  #endif
+  #ifdef USE_E0_MOTOR_FOR_TABLE
+    #define DIRECTION_DDR      DDRA
+    #define DIRECTION_PORT     PORTA
+    #define X_DIRECTION_BIT   6 // MEGA2560 Digital Pin 28(RAMPS 1.4 E0-DIR)
+  #endif
+  #ifdef USE_E1_MOTOR_FOR_TABLE
+    #define DIRECTION_DDR      DDRC
+    #define DIRECTION_PORT     PORTC
+    #define X_DIRECTION_BIT   3 // MEGA2560 Digital Pin 34(RAMPS 1.4 E1-DIR)
+  #endif
+
 //  #define Y_DIRECTION_BIT   6 // MEGA2560 Digital Pin 28
 //  #define Z_DIRECTION_BIT   7 // MEGA2560 Digital Pin 29
   #define DIRECTION_MASK (1<<X_DIRECTION_BIT)
 
   // Define stepper driver enable/disable output pin.
-//  #define STEPPERS_DISABLE_DDR   DDRD
-//  #define STEPPERS_DISABLE_PORT  PORTD
-//  #define STEPPERS_DISABLE_BIT   7 // MEGA2560 Digital Pin 38(RAMPS 1.4 X-EN)
-  #define STEPPERS_DISABLE_DDR   DDRK
-  #define STEPPERS_DISABLE_PORT  PORTK
-  #define STEPPERS_DISABLE_BIT   0 // MEGA2560 Analog Pin 8(RAMPS 1.4 Z-EN)
+  #ifdef USE_X_MOTOR_FOR_TABLE
+    #define STEPPERS_DISABLE_DDR   DDRD
+    #define STEPPERS_DISABLE_PORT  PORTD
+    #define STEPPERS_DISABLE_BIT   7 // MEGA2560 Digital Pin 38(RAMPS 1.4 X-EN)
+  #endif
+  #ifdef USE_Y_MOTOR_FOR_TABLE
+    #define STEPPERS_DISABLE_DDR   DDRF
+    #define STEPPERS_DISABLE_PORT  PORTF
+    #define STEPPERS_DISABLE_BIT   2 // MEGA2560 Analog Pin 2(RAMPS 1.4 Y-EN)
+  #endif
+  #ifdef USE_Z_MOTOR_FOR_TABLE
+    #define STEPPERS_DISABLE_DDR   DDRK
+    #define STEPPERS_DISABLE_PORT  PORTK
+    #define STEPPERS_DISABLE_BIT   0 // MEGA2560 Analog Pin 8(RAMPS 1.4 Z-EN)
+  #endif
+  #ifdef USE_E0_MOTOR_FOR_TABLE
+    #define STEPPERS_DISABLE_DDR   DDRA
+    #define STEPPERS_DISABLE_PORT  PORTA
+    #define STEPPERS_DISABLE_BIT   2 // MEGA2560 Digital Pin 24(RAMPS 1.4 E0-EN)
+  #endif
+  #ifdef USE_E1_MOTOR_FOR_TABLE
+    #define STEPPERS_DISABLE_DDR   DDRC
+    #define STEPPERS_DISABLE_PORT  PORTC
+    #define STEPPERS_DISABLE_BIT   7 // MEGA2560 Digital Pin 30(RAMPS 1.4 E1-EN)
+  #endif
   #define STEPPERS_DISABLE_MASK (1<<STEPPERS_DISABLE_BIT)
 
   // NOTE: All limit bit pins must be on the same port
